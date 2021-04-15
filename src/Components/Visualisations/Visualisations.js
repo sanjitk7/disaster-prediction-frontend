@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
   XYPlot,
   VerticalGridLines,
@@ -8,11 +8,12 @@ import {
   HorizontalBarSeries,
 } from "react-vis";
 import CSVReader from 'react-csv-reader'
-
+import DataFrame, { Row } from 'dataframe-js';
+import funcComp from '../RainfallViz/RainfallViz';
 // Average Purchase Size for Each Product
 
 function Avg() {
-  const [data, setData] = React.useState();
+  const [data, setData] = useState();
   const temp_data = [
     {
       y: "G0001",
@@ -35,11 +36,35 @@ function Avg() {
 //   setData(temp_data);
 
   const getFileData = (data, fileInfo)=>{
-    console.log('DATA: ', data);
-    console.log('DATA LENGTH: ', data.length);
+    
     console.log('FILE INFO: ', fileInfo);
-    setData(data);
+    if(data?.length >0){
+      //converting to dataframe
+      const df = new DataFrame([...data],[...data[0]]);
+      //filtering the data
+      let filteredData = df.filter(row => row.get("country_name") !== '')
+        console.log(filteredData)
+        setData(filteredData);
+      }
+    //setData(filteredData);
+
+
   }
+
+  useEffect(() => {
+    console.log('DATA: ', data);
+    console.log('DATA LENGTH: ', data?.length);
+    if(data && data.length!==0){
+      console.log('getting sql')
+      DataFrame.dropTable('sql');
+      //data.sql.register('tmp')
+      //DataFrame.sql.registerTable(data, 'tmp',true)
+      // Request on Table
+      //let res = DataFrame.sql.request('SELECT COUNT(DISTINCT country_name) FROM tmp;')
+      //console.log('RES: ',res)
+    }
+    
+  },[data])
 
   return (
     <div className="Avg">
@@ -76,6 +101,9 @@ function Avg() {
         />
         {<HorizontalBarSeries barWidth={0.5} data={temp_data} />}
       </XYPlot>
+
+
+      {funcComp}
     </div>
   );
 }
