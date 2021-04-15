@@ -7,11 +7,12 @@ import {
   XAxis,
   HorizontalBarSeries,
 } from "react-vis";
+import CSVReader from 'react-csv-reader'
 
 // Average Purchase Size for Each Product
 
 function Avg() {
-//   const [data, setData] = React.useState();
+  const [data, setData] = React.useState();
   const temp_data = [
     {
       y: "G0001",
@@ -33,8 +34,18 @@ function Avg() {
   
 //   setData(temp_data);
 
+  const getFileData = (data, fileInfo)=>{
+    console.log('DATA: ', data);
+    console.log('DATA LENGTH: ', data.length);
+    console.log('FILE INFO: ', fileInfo);
+    setData(data);
+  }
+
   return (
     <div className="Avg">
+
+        <CSVReader onFileLoaded={(data, fileInfo) => getFileData(data, fileInfo)} />
+    
       <div>Average Purchase Size vs Product</div>
       <XYPlot height={300} width={1200} color="#285104" yType="ordinal">
         <VerticalGridLines />
