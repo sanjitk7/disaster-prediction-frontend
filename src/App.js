@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import Visualisations from './Components/Visualisations/Visualisations'
 import RainfallViz from './Components/RainfallViz/RainfallViz';
 import EarthquakeViz from './Components/Earthquake/Earthquake';
+import MlViz from './Components/Visualisations/MlVisualization';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
@@ -30,6 +31,10 @@ function App() {
           Earthquakes
           <Link to="/earthquake" />  
         </Menu.Item>
+        <Menu.Item key="4">
+          ML Visualization
+          <Link to="/ml" />  
+        </Menu.Item>
       </Menu>
     </Header>
     <Content>
@@ -43,7 +48,9 @@ function App() {
           <Route exact path="/earthquake">
             <EarthquakeViz/>
           </Route>
-
+          <Route exact path="/ml">
+            <MlViz/>
+          </Route>
         </Switch>
         </Content>
         </Layout>
