@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Visualisations from './Components/Visualisations/Visualisations'
 import RainfallViz from './Components/RainfallViz/RainfallViz';
-
+import EarthquakeViz from './Components/Earthquake/Earthquake';
 function App() {
   return (
     <div className="App" style={{ height:"100vh", width:"100vw"}}>
@@ -13,6 +13,9 @@ function App() {
           </Route>
           <Route exact path="/rainfall">
             <RainfallViz />
+          </Route>
+          <Route exact path="/earthquake">
+            <EarthquakeViz/>
           </Route>
 
         </Switch>
