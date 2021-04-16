@@ -469,6 +469,8 @@ function yearChange(value) {
                         padding: '20px 20px 20px 20px',
                         position: 'fixed',
                         left: 0,
+                        marginTop:'6.5vh',
+                        zIndex: 2,
                         color:'white',
                         fontSize: "1vw"
                     }}
@@ -497,17 +499,21 @@ function yearChange(value) {
                     
                
             </Sider>
-            <Content>
+            <Content
+            style={{
+                backgroundColor:'#656565'
+            }}
+            >
             <ReactTooltip>{tooltipContent}</ReactTooltip>
           <ComposableMap
               projectionConfig={PROJECTION_CONFIG}
               projection="geoMercator"
-              width={480}
-              height={176}
-              style={{width:"60vw",height:'90vh'}}
+              width={400}
+              height={147}
+              style={{position:'relative',marginRight:'10vw', width:"100vw",height:'100vh'}}
               data-tip=""
           >
-              <Geographies geography={INDIA_TOPO_JSON}>
+              <Geographies style={{position:'relative',marginRight:'10vw'}} geography={INDIA_TOPO_JSON}>
                 {({ geographies }) =>
                   geographies?.map(geo => {
                       
@@ -528,12 +534,14 @@ function yearChange(value) {
           </ComposableMap>
           </Content>
           <Sider
-          width='20vw'
+          width='21vw'
           style={{
-            overflow: 'auto',
+            
             height: '100vh',
             padding: '20px 20px 20px 20px',
             color:'white',
+            
+            zIndex:2,
             fontSize: "1vw"
         }}
           >
