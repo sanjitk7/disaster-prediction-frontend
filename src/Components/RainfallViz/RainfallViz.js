@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { scaleQuantile } from 'd3-scale';
 import rainfallData from './RainfallData.json';
-import { Checkbox,Select,  Slider, Switch } from 'antd';
+import { Checkbox,Select,  Slider, Switch, Layout, Menu  } from 'antd';
 import ReactTooltip from 'react-tooltip';
+const { Header, Content, Footer, Sider } = Layout;
 // import { CpsContext } from 'twilio/lib/rest/preview/trusted_comms/cps';
 const { Option } = Select;
 const AllStates =[
@@ -351,7 +352,7 @@ function yearChange(value) {
   }
   
   let checkBoxGroup = AllStates.map(o=>(
-      <Checkbox key={o.key} defaultChecked={checked} value={o.value} onChange={onChange} disabled={allowSelection}>{o.label}</Checkbox>
+      <><Checkbox style={{color:'white',fontSize:'1vw'}} key={o.key} defaultChecked={checked} value={o.value} onChange={onChange} disabled={allowSelection}>{o.label}</Checkbox><br/></>
   )) 
 
   const singleYear = () =>{
@@ -459,12 +460,51 @@ function yearChange(value) {
       }
         return (
             <>
+            <Layout>
+            <Sider
+                width='20vw'
+                    style={{
+                        overflow: 'auto',
+                        height: '100vh',
+                        padding: '20px 20px 20px 20px',
+                        position: 'fixed',
+                        left: 0,
+                        color:'white',
+                        fontSize: "1vw"
+                    }}
+             >
+                
+                    
+                        Show by year: &nbsp;&nbsp;&nbsp;
+                        <Switch size="large" checked={disabled} onChange={handleDisabledChange} /><br/>
+                        <br/><br/><br/>
+                        Select a year from below to display data by<br/><br/>
+                        <Select disabled={!disabled} size='large' defaultValue='1901' onChange={yearChange} style={{ width:'18vw', position:'absolute' }}>
+                            {children}
+                        </Select><br/><br/><br/>
+
+                        Select a range of years to display average rainfall for<br/><br/>
+                        <Slider 
+                            range 
+                            min= {1901}
+                            max={2017}
+                            defaultValue={[1925, 2001]} 
+                            disabled={disabled} 
+                            tooltipVisible
+                            tooltipPlacement="bottom"
+                            onChange= {sliderChange}
+                        />
+                    
+               
+            </Sider>
+            <Content>
             <ReactTooltip>{tooltipContent}</ReactTooltip>
           <ComposableMap
               projectionConfig={PROJECTION_CONFIG}
               projection="geoMercator"
               width={480}
               height={176}
+              style={{width:"60vw",height:'90vh'}}
               data-tip=""
           >
               <Geographies geography={INDIA_TOPO_JSON}>
@@ -486,21 +526,21 @@ function yearChange(value) {
                 }
               </Geographies>
           </ComposableMap>
-          
+          </Content>
+          <Sider
+          width='20vw'
+          style={{
+            overflow: 'auto',
+            height: '100vh',
+            padding: '20px 20px 20px 20px',
+            color:'white',
+            fontSize: "1vw"
+        }}
+          >
           {checkBoxGroup}<br/><br/>
-          Disabled: <Switch size="large" checked={disabled} onChange={handleDisabledChange} /><br/><br/>
-          <Select disabled={!disabled} size='large' defaultValue='1901' onChange={yearChange} style={{ width: 200 }}>
-              {children}
-          </Select>
-          <Slider 
-            range 
-            min= {1901}
-            max={2017}
-            defaultValue={[1925, 2001]} 
-            disabled={disabled} 
-            tooltipVisible
-            onChange= {sliderChange}
-          />
+          
+          </Sider>
+          </Layout>
           </>
 
         )
