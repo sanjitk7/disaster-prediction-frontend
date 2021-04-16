@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import Visualisations from './Components/Visualisations/Visualisations'
 import RainfallViz from './Components/RainfallViz/RainfallViz';
 import EarthquakeViz from './Components/Earthquake/Earthquake';
@@ -10,16 +10,26 @@ const { Header, Content, Footer, Sider } = Layout;
 
 function App() {
   return (
+    
     <div className="App" style={{ height:"100vh", width:"100vw"}}>
+      <Router>
       <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }} className="header">
       <div className="logo" />
       <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
-        <Menu.Item key="1" href="/">Landslides</Menu.Item>
-        <Menu.Item key="2" href="/rainfall">Rainfall</Menu.Item>
-        <Menu.Item key="3" href="/earthquake">Earthquakes</Menu.Item>
+        <Menu.Item key="1">
+          Landslides
+          <Link to="/" />
+        </Menu.Item>
+        <Menu.Item key="2">
+          Rainfall
+          <Link to="/rainfall" />
+        </Menu.Item>
+        <Menu.Item key="3">
+          Earthquakes
+          <Link to="/earthquake" />  
+        </Menu.Item>
       </Menu>
     </Header>
-      <Router>
         <Switch>
           <Route exact path="/">
             <Visualisations />
