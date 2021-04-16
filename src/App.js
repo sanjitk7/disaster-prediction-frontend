@@ -12,7 +12,9 @@ function App() {
   return (
     
     <div className="App" style={{ height:"100vh", width:"100vw"}}>
+      
       <Router>
+        <Layout>
       <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }} className="header">
       <div className="logo" />
       <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
@@ -30,6 +32,7 @@ function App() {
         </Menu.Item>
       </Menu>
     </Header>
+    <Content>
         <Switch>
           <Route exact path="/">
             <Visualisations />
@@ -42,7 +45,11 @@ function App() {
           </Route>
 
         </Switch>
+        </Content>
+        </Layout>
       </Router>
+    
+      
     </div>
   );
 }

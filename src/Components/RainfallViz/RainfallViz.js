@@ -348,7 +348,7 @@ function yearChange(value) {
 
   const children = [];
   for (let i = 1901; i < 2018; i++) {
-    children.push(<Option value={i} key={i}>{i}</Option>);
+    children.push(<Option style={{zIndex:3}} value={i} key={i}>{i}</Option>);
   }
   
   let checkBoxGroup = AllStates.map(o=>(
@@ -481,7 +481,7 @@ function yearChange(value) {
                         <Switch size="large" checked={disabled} onChange={handleDisabledChange} /><br/>
                         <br/><br/><br/>
                         Select a year from below to display data by<br/><br/>
-                        <Select disabled={!disabled} size='large' defaultValue='1901' onChange={yearChange} style={{ width:'18vw', position:'absolute' }}>
+                        <Select disabled={!disabled} size='large' defaultValue='1901' onChange={yearChange} style={{ width:'18vw',zIndex:3, position:'absolute' }}>
                             {children}
                         </Select><br/><br/><br/>
 

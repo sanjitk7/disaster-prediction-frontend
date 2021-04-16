@@ -48,7 +48,10 @@ export default function Earthquake(){
   }
     return(
     <>
-     <MapContainer center={[0, 0]} zoom={3} style={{height:"80vh", width:"100vw"}}>
+    <Select  size='large' defaultValue='5' onChange={changeHandler} style={{marginTop:"6.5vh",zIndex:100,width: 200 }}>
+              {children}
+    </Select>
+     <MapContainer center={[0, 0]} zoom={3} style={{ height:"100vh", width:"100vw"}}>
      <LayersControl position="topright">
                 {tileLayers.map(({ id, name, attribution, url, checked }) => (
                     <LayersControl.BaseLayer
@@ -69,9 +72,7 @@ export default function Earthquake(){
            
     </MapContainer>
 
-    <Select  size='large' defaultValue='5' onChange={changeHandler} style={{ width: 200 }}>
-              {children}
-    </Select>
+    
     </>
     )
 } 
