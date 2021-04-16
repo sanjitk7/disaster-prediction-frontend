@@ -29,13 +29,14 @@ function Visualisations() {
   }, []);
  
   return (
-    <div className="Visualisations" style={{ height: 400, marginTop:'6.5vh' }}>
+    <div className="Visualisations" style={{ height: 400, marginLeft:"20px",marginTop:'6.5vh' }}>
  
       {console.log(JSON.stringify(visdata))}
       {console.log(JSON.stringify(visdata2))}
       {console.log(JSON.stringify(visdata3))}
- 
+      <h3>A Bargraph showing landslide triggers vs the fatalities</h3>
       <BarChart data={visdata} />
+      <h3>A Pie Chart showing total fatalities caused by landslides per country</h3>
       <PieChart data={visdata2} />
       {/* <ScatterPlot data={visdata3} /> */}
       {/* <BumpPlot data={temp}/> */}
