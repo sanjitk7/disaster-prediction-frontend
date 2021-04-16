@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { scaleQuantile } from 'd3-scale';
 import rainfallData from './RainfallData.json';
-import { Checkbox,Select, Button, notification } from 'antd';
+import { Checkbox,Select,  Slider, Switch } from 'antd';
 import ReactTooltip from 'react-tooltip';
+import { CpsContext } from 'twilio/lib/rest/preview/trusted_comms/cps';
 const { Option } = Select;
 const AllStates =[
     {
@@ -258,6 +259,9 @@ export default function FuncComp(){
     const [selectYear, setSelectYear]= useState(1901)
     const [allowSelection, setAllowSelection] = useState(true)
     const [currentVal, setCurrentVal]= useState([])
+    const [disabled, setDisabled] = useState(false)
+    const [checked, setChecked]= useState(false)
+    const [sliderVal, setSliderVal]= useState([1925, 2001])
     useEffect(() => {
         console.log(selectYear)
         if(selectYear!==null){
@@ -347,36 +351,77 @@ function yearChange(value) {
   }
   
   let checkBoxGroup = AllStates.map(o=>(
-      <Checkbox key={o.key} value={o.value} onChange={onChange} disabled={allowSelection}>{o.label}</Checkbox>
+      <Checkbox key={o.key} defaultChecked={checked} value={o.value} onChange={onChange} disabled={allowSelection}>{o.label}</Checkbox>
   )) 
 
-  
+  const singleYear = () =>{
+    let allRainfallData = rainfallData.filter(o=>o.id==currentVal[0])
+    console.log('this is data: ', allRainfallData);
+    let lastRain = allRainfallData.find(o=>o.YEAR===parseInt(selectYear))?.sum
+    if(lastRain!==null){
+        console.log('KEY: ',currentVal[0], ' New DATA: ',lastRain);
+        let tempArr = [];
+
+        
+        if(currentVal.length>0){
+            for(let i=0;i<selectedKeys.length;i++){
+                let newObj= { 
+                    id: currentVal[i] ,
+                    state: 'Puducherry', 
+                    value: lastRain
+                }
+                tempArr.push(newObj)
+                //console.log('DATA STATE: ',data)
+            }
+            getHeatMapData(tempArr)
+        }
+    }
+  }
+
+
+  const averageVals =()=>{
+    let allRainfallData = rainfallData.filter(o=>o.id==currentVal[0])
+    let lastRain=0;
+      for(let i=sliderVal[0]; i<sliderVal[1];i++){
+        
+        let tmpVal = parseFloat(allRainfallData.find(o=>o.YEAR===parseInt(i))?.sum)
+        console.log('Current VAL: ', currentVal[0], ' year: ', i, ' tmpVal: ', tmpVal);
+        if(!isNaN(tmpVal)){
+            lastRain = lastRain+parseFloat(tmpVal)
+        }
+        
+        console.log('LAST RAIN: ', lastRain)
+      }
+      console.log('Total last rain',lastRain)
+      lastRain = lastRain/(sliderVal[1]-sliderVal[0])
+      console.log('Average last rain',lastRain)
+      if(lastRain!==null){
+        console.log('KEY: ',currentVal[0], ' New DATA: ',lastRain);
+        let tempArr = [];
+
+        
+        if(currentVal.length>0){
+            for(let i=0;i<selectedKeys.length;i++){
+                let newObj= { 
+                    id: currentVal[i] ,
+                    state: 'Puducherry', 
+                    value: lastRain
+                }
+                tempArr.push(newObj)
+                //console.log('DATA STATE: ',data)
+            }
+            getHeatMapData(tempArr)
+        }
+    }
+  }
     useEffect(() => {
         console.log(rainfallData);
        
-            let allRainfallData = rainfallData.filter(o=>o.id==currentVal[0])
-            console.log('this is data: ', allRainfallData);
-            let lastRain = allRainfallData.find(o=>o.YEAR===parseInt(selectYear))?.sum
-            if(lastRain!==null){
-                console.log('KEY: ',currentVal[0], ' New DATA: ',lastRain);
-                let tempArr = [];
-    
-                
-                if(currentVal.length>0){
-                    for(let i=0;i<selectedKeys.length;i++){
-                        let newObj= { 
-                            id: currentVal[i] ,
-                            state: 'Puducherry', 
-                            value: lastRain
-                        }
-                        tempArr.push(newObj)
-                        //console.log('DATA STATE: ',data)
-                    }
-                    getHeatMapData(tempArr)
-                }
-
-                
-            }
+        if(disabled===true){
+            singleYear()
+        }else{
+            averageVals()
+        }
             
      
         
@@ -400,6 +445,18 @@ function yearChange(value) {
    const colorScale = scaleQuantile()
     .domain(data.map(d => d.value))
     .range(COLOR_RANGE);
+
+    const handleDisabledChange = disabled => {
+        setDisabled(disabled);
+        setData([])
+        setSelectedKeys([])
+        setChecked(false)
+      };
+
+      const sliderChange = value =>{
+          console.log(value);
+          setSliderVal([...value])
+      }
         return (
             <>
             <ReactTooltip>{tooltipContent}</ReactTooltip>
@@ -431,10 +488,19 @@ function yearChange(value) {
           </ComposableMap>
           
           {checkBoxGroup}<br/><br/>
-          <Select size='large' defaultValue='1901' onChange={yearChange} style={{ width: 200 }}>
+          Disabled: <Switch size="large" checked={disabled} onChange={handleDisabledChange} /><br/><br/>
+          <Select disabled={!disabled} size='large' defaultValue='1901' onChange={yearChange} style={{ width: 200 }}>
               {children}
           </Select>
-          
+          <Slider 
+            range 
+            min= {1901}
+            max={2017}
+            defaultValue={[1925, 2001]} 
+            disabled={disabled} 
+            tooltipVisible
+            onChange= {sliderChange}
+          />
           </>
 
         )
