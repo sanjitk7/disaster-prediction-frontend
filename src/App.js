@@ -4,6 +4,7 @@ import Visualisations from './Components/Visualisations/Visualisations'
 import RainfallViz from './Components/RainfallViz/RainfallViz';
 import EarthquakeViz from './Components/Earthquake/Earthquake';
 import MlViz from './Components/Visualisations/MlVisualization';
+import MlVizFatality from './Components/Visualisations/MlVisualisationFatality';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
@@ -35,6 +36,10 @@ function App() {
           ML Visualization
           <Link to="/ml" />  
         </Menu.Item>
+        <Menu.Item key="5">
+          ML Visualization Fatality
+          <Link to="/mlfat" />  
+        </Menu.Item>
       </Menu>
     </Header>
     <Content>
@@ -50,6 +55,9 @@ function App() {
           </Route>
           <Route exact path="/ml">
             <MlViz/>
+          </Route>
+          <Route exact path="/mlfat">
+            <MlVizFatality/>
           </Route>
         </Switch>
         </Content>
