@@ -1,14 +1,9 @@
 import { ResponsiveBar } from '@nivo/bar'
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
 const BarChart = ({ data /* see data tab */ }) => (
     <ResponsiveBar
         data={data}
-        keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
-        indexBy="country"
+        keys={[ 'fatality_count']}
+        indexBy="lanslide_trigger"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: 'linear' }}
@@ -19,7 +14,7 @@ const BarChart = ({ data /* see data tab */ }) => (
                 id: 'dots',
                 type: 'patternDots',
                 background: 'inherit',
-                color: '#38bcb2',
+                color: '#14a9bc',
                 size: 4,
                 padding: 1,
                 stagger: true
@@ -28,7 +23,7 @@ const BarChart = ({ data /* see data tab */ }) => (
                 id: 'lines',
                 type: 'patternLines',
                 background: 'inherit',
-                color: '#eed312',
+                color: '#14a9bc',
                 rotation: -45,
                 lineWidth: 6,
                 spacing: 10
@@ -55,7 +50,7 @@ const BarChart = ({ data /* see data tab */ }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'country',
+            legend: 'lanslide_trigger',
             legendPosition: 'middle',
             legendOffset: 32
         }}
@@ -63,7 +58,7 @@ const BarChart = ({ data /* see data tab */ }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'food',
+            legend: 'fatalities',
             legendPosition: 'middle',
             legendOffset: -40
         }}
