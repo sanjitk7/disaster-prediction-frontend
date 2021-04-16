@@ -1,6 +1,6 @@
 import React from "react";
 import BarChart from "./BarChart"
-
+import funcComp from '../RainfallViz/RainfallViz';
 import {
   parse_float,
   get_attribute,
@@ -57,6 +57,7 @@ function Visualisations() {
       {!loading ? console.log(visdata) : "none"}
       {console.log(JSON.stringify(visdata))}
       <BarChart data={visdata}/>
+      {funcComp}
     </div>
   );
 }
