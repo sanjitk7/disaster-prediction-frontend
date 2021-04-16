@@ -55,16 +55,16 @@ const submitHandler = event =>{
     getRainfallPred()
 }
   return (
-    <div className="Visualisations" style={{ height: 400, marginTop:'6.5vh' }}>
+    <div className="Visualisations" style={{ backgroundColor:'white' , height: '500px', marginTop:'6.5vh' }}>
     <div>
     <h3>Month 1: </h3><Input placeholder="Month One Rainfall" onChange={event=>monthOneChange(event)}/>
     <h3>Month 2: </h3><Input placeholder="Month Two Rainfall" onChange={event=>monthTwoChange(event)}/>
-    <h3>Month 3: </h3><Input placeholder="Month Three Rainfall" onChange={event=>monthThreeChange(event)}/>
+    <h3>Month 3: </h3><Input placeholder="Month Three Rainfall" onChange={event=>monthThreeChange(event)}/><br/>
     <Button type='primary' onClick={submitHandler}>SUBMIT</Button><br/><br/>
     </div>
-    <div>
+  
       {fthLineChart}
-    </div><br/>
+   
     
     </div>
   );
