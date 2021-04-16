@@ -4,8 +4,7 @@ import { scaleQuantile } from 'd3-scale';
 import rainfallData from './RainfallData.json';
 import { Checkbox,Select, Button } from 'antd';
 import notification from './notification';
-
-
+import 'antd/dist/antd.css';
 const { Option } = Select;
 const AllStates =[
     {
@@ -257,12 +256,13 @@ const AllStates =[
 export default function FuncComp(){
     const [data, setData] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
-    const [selectYear, setSelectYear]= useState()
+    const [selectYear, setSelectYear]= useState(1901)
     const [allowSelection, setAllowSelection] = useState(true)
 
     useEffect(() => {
+        console.log(selectYear)
         if(selectYear!==null){
-            //setAllowSelection(!allowSelection);
+            setAllowSelection(false);
         }
     },[selectYear])
 
@@ -336,6 +336,8 @@ export default function FuncComp(){
 
 function yearChange(value) {
     console.log(`selected ${value}`);
+    setSelectYear(value)
+    setData([])
   }
 
   const children = [];
@@ -352,7 +354,7 @@ function yearChange(value) {
         console.log(rainfallData);
         selectedKeys.map(key=>{
             let allRainfallData = rainfallData.filter(o=>o.id==key)
-            let lastRain = allRainfallData.find(o=>o.YEAR===2017)?.sum
+            let lastRain = allRainfallData.find(o=>o.YEAR===parseInt(selectYear))?.sum
             if(lastRain === null){
                 return(notification('error', 'The requested data could not be found'))
                 
@@ -416,6 +418,7 @@ function yearChange(value) {
           <Select size='large' defaultValue='1901' onChange={yearChange} style={{ width: 200 }}>
               {children}
           </Select>
+          
           </>
 
         )

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Visualisations from './Components/Visualisations/Visualisations'
 import RainfallViz from './Components/RainfallViz/RainfallViz';
+
 function App() {
   return (
     <div className="App" style={{ height:"100vh", width:"100vw"}}>

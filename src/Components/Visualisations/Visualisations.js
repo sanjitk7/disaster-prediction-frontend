@@ -7,8 +7,7 @@ import {
   XAxis,
   HorizontalBarSeries,
 } from "react-vis";
-import CSVReader from 'react-csv-reader'
-import DataFrame, { Row } from 'dataframe-js';
+
 import funcComp from '../RainfallViz/RainfallViz';
 // Average Purchase Size for Each Product
 
@@ -34,7 +33,7 @@ function Avg() {
 // }, [])
   
 //   setData(temp_data);
-
+/*
   const getFileData = (data, fileInfo)=>{
     
     console.log('FILE INFO: ', fileInfo);
@@ -65,11 +64,11 @@ function Avg() {
     }
     
   },[data])
-
+*/
   return (
     <div className="Avg">
 
-        <CSVReader onFileLoaded={(data, fileInfo) => getFileData(data, fileInfo)} />
+       
     
       <div>Average Purchase Size vs Product</div>
       <XYPlot height={300} width={1200} color="#285104" yType="ordinal">
