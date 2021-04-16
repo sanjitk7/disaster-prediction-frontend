@@ -53,6 +53,7 @@
     "react-scripts": "^3.4.3",
     "react-simple-maps": "^2.3.0",
     "react-throttle": "^0.3.0",
+    "react-tooltip": "^4.2.17",
     "react-trend": "^1.2.5",
     "react-vis": "^1.11.7",
     "react-youtube": "^7.12.0",

@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { scaleQuantile } from 'd3-scale';
 import rainfallData from './RainfallData.json';
-import { Checkbox,Select, Button } from 'antd';
-import notification from './notification';
-import 'antd/dist/antd.css';
+import { Checkbox,Select, Button, notification } from 'antd';
+import ReactTooltip from 'react-tooltip';
 const { Option } = Select;
 const AllStates =[
     {
@@ -258,7 +257,7 @@ export default function FuncComp(){
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [selectYear, setSelectYear]= useState(1901)
     const [allowSelection, setAllowSelection] = useState(true)
-
+    const [currentVal, setCurrentVal]= useState([])
     useEffect(() => {
         console.log(selectYear)
         if(selectYear!==null){
@@ -307,15 +306,15 @@ export default function FuncComp(){
   },[])
  
  
-  const getHeatMapData = (key,sum) => {
-    let tempArr = [...data];
+  const getHeatMapData = (newArr) => {
+    let tempArr = [...data, ...newArr];
     
-        let newObj= { 
+        /*let newObj= { 
             id: key ,
             state: 'Puducherry', 
             value: sum
-        }
-        tempArr.push(newObj);
+        }*/
+        //tempArr.push(newObj);
         console.log('THIS IS INSIDE HEAT MAP: ',tempArr);
         setData(tempArr)
     
@@ -330,14 +329,16 @@ export default function FuncComp(){
         if(tempArr.includes(val)===false){
             tempArr.push(val)
             setSelectedKeys([...tempArr])
+            setCurrentVal([...checkVal])
         }
     })
 }
-
+console.log('tHIS IS CURRENT: ',currentVal);
 function yearChange(value) {
     console.log(`selected ${value}`);
     setSelectYear(value)
     setData([])
+    setSelectedKeys([])
   }
 
   const children = [];
@@ -352,18 +353,32 @@ function yearChange(value) {
   
     useEffect(() => {
         console.log(rainfallData);
-        selectedKeys.map(key=>{
-            let allRainfallData = rainfallData.filter(o=>o.id==key)
+       
+            let allRainfallData = rainfallData.filter(o=>o.id==currentVal[0])
+            console.log('this is data: ', allRainfallData);
             let lastRain = allRainfallData.find(o=>o.YEAR===parseInt(selectYear))?.sum
-            if(lastRain === null){
-                return(notification('error', 'The requested data could not be found'))
+            if(lastRain!==null){
+                console.log('KEY: ',currentVal[0], ' New DATA: ',lastRain);
+                let tempArr = [];
+    
                 
-            }else{
-                console.log('KEY: ',key, ' New DATA: ',lastRain);
-                getHeatMapData(key,lastRain)
+                if(currentVal.length>0){
+                    for(let i=0;i<selectedKeys.length;i++){
+                        let newObj= { 
+                            id: currentVal[i] ,
+                            state: 'Puducherry', 
+                            value: lastRain
+                        }
+                        tempArr.push(newObj)
+                        //console.log('DATA STATE: ',data)
+                    }
+                    getHeatMapData(tempArr)
+                }
+
+                
             }
             
-        })
+     
         
         
     },[selectedKeys])
@@ -387,6 +402,7 @@ function yearChange(value) {
     .range(COLOR_RANGE);
         return (
             <>
+            <ReactTooltip>{tooltipContent}</ReactTooltip>
           <ComposableMap
               projectionConfig={PROJECTION_CONFIG}
               projection="geoMercator"
