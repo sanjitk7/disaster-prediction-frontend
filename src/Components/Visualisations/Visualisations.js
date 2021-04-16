@@ -53,7 +53,7 @@ function Visualisations() {
       <PieChart data={visdata2} />
       {/* <ScatterPlot data={visdata3} /> */}
       {/* <BumpPlot data={temp}/> */}
-      {loading? <LineChart data={temp}/> : null}
+      {loading? <LineChart data={visdata4}/> : null}
       {funcComp}
     </div>
   );
