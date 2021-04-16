@@ -4,7 +4,7 @@ import { scaleQuantile } from 'd3-scale';
 import rainfallData from './RainfallData.json';
 import { Checkbox,Select,  Slider, Switch } from 'antd';
 import ReactTooltip from 'react-tooltip';
-import { CpsContext } from 'twilio/lib/rest/preview/trusted_comms/cps';
+// import { CpsContext } from 'twilio/lib/rest/preview/trusted_comms/cps';
 const { Option } = Select;
 const AllStates =[
     {

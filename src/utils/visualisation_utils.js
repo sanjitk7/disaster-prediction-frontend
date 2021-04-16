@@ -28,13 +28,15 @@ function parse_float(arr) {
   
   function obj_to_array_of_obj(obj, labels) {
     let resArr = [];
-    var x,y = [labels]
+    var temp_obj = {}
+    var [x,y] = labels
     Object.keys(obj).forEach(function (key, index) {
-      resArr.push({
-        "lanslide_trigger": key,
-        "fatality_count": obj[key],
-      });
+      temp_obj={}
+      temp_obj[x] = key;
+      temp_obj[y] = obj[key]
+      resArr.push(temp_obj);
     });
+    console.log("resArr: ",resArr);
     return resArr;
   }
   
