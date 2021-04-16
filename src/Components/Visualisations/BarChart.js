@@ -4,7 +4,7 @@ const BarChart = ({ data /* see data tab */ }) => (
     <ResponsiveBar
         data={data}
         keys={[ 'fatality_count']}
-        indexBy="lanslide_trigger"
+        indexBy="landslide_trigger"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: 'linear' }}
@@ -51,7 +51,7 @@ const BarChart = ({ data /* see data tab */ }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'lanslide_trigger',
+            legend: 'landslide_trigger',
             legendPosition: 'middle',
             legendOffset: 32
         }}
