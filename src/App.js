@@ -6,6 +6,7 @@ import EarthquakeViz from './Components/Earthquake/Earthquake';
 import MlViz from './Components/Visualisations/MlVisualization';
 import MlVizFatality from './Components/Visualisations/MlVisualisationFatality';
 import EarthquakePred from './Components/Visualisations/earthquakePred';
+import ModelComparison from './Components/Visualisations/modelComparison';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
@@ -38,12 +39,16 @@ function App() {
           <Link to="/ml" />  
         </Menu.Item>
         <Menu.Item key="5">
-          ML Visualization Fatality
+          Landslide Fatality Prediction
           <Link to="/mlfat" />
           </Menu.Item>
           <Menu.Item key="6">
-          Earthquake Prediction
+          Earthquake Magnitude Prediction
           <Link to="/earthpred" />  
+        </Menu.Item>
+        <Menu.Item key="7">
+          Model Comparison
+          <Link to="/modelcomparison" />  
         </Menu.Item>
       </Menu>
     </Header>
@@ -66,6 +71,9 @@ function App() {
             </Route>
           <Route exact path="/earthpred">
             <EarthquakePred/>
+          </Route>
+          <Route exact path="/modelcomparison">
+            <ModelComparison/>
           </Route>
         </Switch>
         </Content>

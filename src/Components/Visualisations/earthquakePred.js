@@ -12,8 +12,8 @@ import {
 } from 'react-leaflet';
 import L from "leaflet";
 import icon from './icon';
+import MyMarker from './earthquakeMarker';
 import { tectonicPlatesStyle, tileLayers } from '../Earthquake/constants';
-import LocationPicker from "react-leaflet-location-picker";
 import BarChart from "./BarChartEarth";
 import {
     create_object,
@@ -34,6 +34,7 @@ export default function EarthquakePred(){
     const[magSource,setmagSource]= useState("ci");
     const[shortPlace,setshortPlace]= useState("CA");
     const [loading, setLoading] = useState(true);
+    const [earthMagMarker, setEarthMagMarker] =useState([])
     let optionsChoice = ['earthquake','quarry blast','explosion','ice quake','other event']
     let locChoice=["ci","hv","ak","nc","us","pr","nn","ok","mb","tx","uw","av","uu","nm","se"]
     let magChoice=["ci","hv","ak","nc","us","pr","nn","ok","mb","tx","uw","av","uu","nm","guc","se"]
@@ -106,6 +107,23 @@ export default function EarthquakePred(){
         }
     }
      const labels = ["predData","value"]
+     const circleMarkerColor = (magnitude)=> {
+        return magnitude <= 1
+            ? '#5b0a91'
+            : magnitude > 1 && magnitude <= 2
+            ? '#a8005b'
+            : magnitude > 2 && magnitude <= 3
+            ? '#ff6600'
+            : magnitude > 3 && magnitude <= 5
+            ? '#dc1c13'
+            : magnitude > 5 && magnitude <= 7
+            ? '#0514f0'
+            : '#000000';
+    };
+     useEffect(()=>{
+        console.log('THIS STATE HAS CHANGED: ',earthMagMarker)  
+     },[earthMagMarker])
+     
     const getEathquakePred = ()=>{
         setLoading(true)
         axios.post("http://localhost:5000/magnitudepred", {
@@ -121,17 +139,21 @@ export default function EarthquakePred(){
             "depthError":depthError
         }).then((data_response)=>{
           console.log("data_response: ",(data_response.data));
+          let fColor = circleMarkerColor(data_response.data)
             let newObj = {
-                "Magnitude":data_response.data[0],
-                
+                "Magnitude":data_response.data,
+                "locations":[lat,long],
+                "color":fColor
             }
-          let finObj = obj_to_array_of_obj(
-            newObj,
-            labels
-          );
-          setVisdata4(finObj)
-          //setVisdata4([{"id":"rainfall","data":[{"x":"month_1","y":parseFloat(monthOne)},{"x":"month_2","y":parseFloat(monthTwo)},{"x":"month_3","y":parseFloat(monthThree)},{"x":"month_4","y":data_response.data}]}])
-          //console.log("visdata4 inside: ",visdata4);
+          
+          console.log(newObj);
+          let newArr = [...earthMagMarker]
+          newArr.push(newObj)
+          setEarthMagMarker(newArr)
+       
+    
+            
+          
           setLoading(false)
         }).catch((err)=>{
           console.log(err)
@@ -236,15 +258,11 @@ export default function EarthquakePred(){
         }}
              
             </MapConsumer>
-            
+            <MyMarker data={earthMagMarker} />
     </MapContainer>
                 </td>
             </tr>
         </table>
-        
-        {fthLineChart}
-
-       
-        </div>
+    </div>
     )
 }
