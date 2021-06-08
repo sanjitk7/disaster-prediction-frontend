@@ -6,7 +6,7 @@ export default function MlVisFatality() {
   const [visdata5, setVisdata5] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const all_landslide_categories = ["landslide","mudslide","rock_fall","complex","debris_flow","other","riverbank_collapse","snow_avalanche","translational_slide","lahar","earth_flow","creep","topple"];
+  const all_landslide_categories = ["mudslide","rock_fall","complex","debris_flow","other","riverbank_collapse","snow_avalanche","translational_slide","earth_flow","creep"];
     
     useEffect(()=>{
         setLoading(true);

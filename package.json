@@ -54,6 +54,7 @@
     "react-intl": "^5.8.1",
     "react-leaflet": "^3.1.0",
     "react-leaflet-enhanced-marker": "^1.0.19",
+    "react-leaflet-location-picker": "^1.4.2",
     "react-loadable": "^5.5.0",
     "react-motion-drawer": "^3.1.0",
     "react-perfect-scrollbar": "^1.5.8",

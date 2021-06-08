@@ -31,7 +31,19 @@ export default function Earthquake(){
 
     }
     //console.log(greaterFive)
-   
+    const circleMarkerColor = (magnitude)=> {
+        return magnitude <= 1
+            ? '#5b0a91'
+            : magnitude > 1 && magnitude <= 2
+            ? '#a8005b'
+            : magnitude > 2 && magnitude <= 3
+            ? '#ff6600'
+            : magnitude > 3 && magnitude <= 5
+            ? '#dc1c13'
+            : magnitude > 5 && magnitude <= 7
+            ? '#8b0000'
+            : '#000000';
+    };
     useEffect(()=>{
         getAllMarkers(filterData)
         console.log(filterData)

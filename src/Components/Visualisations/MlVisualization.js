@@ -19,7 +19,7 @@ export default function MlVis() {
           third_month: 29.2,
         }).then((data_response)=>{
           console.log("data_response: ",data_response);
-          setVisdata4([{"id":"rainfall","data":[{"x":"month_1","y":parseFloat(monthOne)},{"x":"month_2","y":parseFloat(monthTwo)},{"x":"month_3","y":parseFloat(monthThree)},{"x":"month_4","y":data_response.data}]}])
+          setVisdata4([{"id":"rainfall","data":[{"x":"month_1","y":parseFloat(monthOne)},{"x":"month_2","y":parseFloat(monthTwo)},{"x":"month_3","y":parseFloat(monthThree)},{"x":"month_4","y":parseFloat(data_response.data)*100}]}])
           console.log("visdata4 inside: ",visdata4);
           setLoading(false)
         }).catch((err)=>{
